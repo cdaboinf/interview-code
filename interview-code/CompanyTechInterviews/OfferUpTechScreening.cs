@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 
-namespace interview_code
+namespace interview_code.CompanyTechInterviews
 {
-    public class EbuilderTechScreening
+    public class OfferUpTechScreening
     {
         /*
          * maze problem, find possible path from a to b, then come back from b to a
@@ -10,121 +11,97 @@ namespace interview_code
          * -1 is an invalid path
          * return the total values of 1s collection from a to b plus b to a
          */
-        public static int CollectMax(List<List<int>> mat)
+        public int CollectMax(int[,] mat)
         {
             var riders = 0;
-            if (FindPathWithRidersToAirport(mat, 0, 0, riders) == false) {
-                return 0; 
-            }
-            if (FindPathWithRidersToStart(mat, 0, 0, riders) == false) {
-                return 0; 
+            var visited = new List<int>();
+            var sol = new int[3, 3]
+            {
+                {0, 0, 0},
+                {0, 0, 0},
+                {0, 0, 0},
+            };
+            /*
+            if (!FindPathWithRidersToAirport(mat, 0, 0, sol) == false)
+            {
+                return 0;
+            }*/
+            //if (!FindPathWithRidersToStart(mat, 0, 0, riders) == false) {
+            //   return 0; 
+            //}
+
+            var flag = FindPathWithRidersToAirport(mat, 0, 0, sol);
+            
+            for (var i = 0; i < 3; i++) {
+                for (var j = 0; j < 3; j++) {
+                    Console.Write(sol[i, j] + "\t");
+                }
+                Console.WriteLine();
             }
 
             return riders;
         }
 
-        private static bool FindPathWithRidersToAirport(List<List<int>> mat, int x, int y, int riders)
+        private static bool FindPathWithRidersToAirport(int[,] mat, int row, int col, int[,] sol)
         {
             // found airport
-            if ((x == mat.Count - 1 && y == mat.Count - 1) && (mat[x][y] == 1 || mat[x][y] == 0))
+            if ((row == 3 - 1 && col == 3 - 1) && (mat[row, col] == 1))
             {
-                if (mat[x][y] == 1)
-                {
-                    riders += 1;
-                }
+                sol[row, col] = 1;
                 return true;
             }
 
             // Check if maze[x][y] is valid
-            if (x >= 0 && x < mat.Count && y >= 0 && y < mat.Count && mat[x][y] != -1)
+            if ((row >= 0 && row < 3) && (col >= 0 && col < 3) && mat[row, col] == 1)
             {
-                if (mat[x][y] == 1)
-                {
-                    riders += 1;
-                }
                 // mark x, y as part of solution path 
-                mat[x][y] = 0;
+                sol[row, col] = 1;
 
                 // Move right
-                if (FindPathWithRidersToAirport(mat, x + 1, y, riders))
+                if (FindPathWithRidersToAirport(mat, row, col + 1, sol))
+                {
                     return true;
+                }
 
                 // Move down
-                if (FindPathWithRidersToAirport(mat, x, y + 1, riders))
+                if (FindPathWithRidersToAirport(mat, row + 1, col, sol))
+                {
                     return true;
-                
+                }
+
                 // backtrack
-                riders -= 1;
-                mat[x][y] = 1;
+                sol[row, col] = 0;
                 return false;
             }
 
             return false;
         }
-        
-        private static bool FindPathWithRidersToStart(List<List<int>> mat, int x, int y, int riders)
-        {
-            // found airport
-            if ((x == 0 && y == 0) && (mat[x][y] == 1 || mat[x][y] == 0))
-            {
-                if (mat[x][y] == 1)
-                {
-                    riders += 1;
-                }
-                return true;
-            }
 
-            // Check if maze[x][y] is valid
-            if (x >= 0 && x < mat.Count && y >= 0 && y < mat.Count && mat[x][y] != -1)
-            {
-                if (mat[x][y] == 1)
-                {
-                    riders += 1;
-                }
-                // mark x, y as part of solution path 
-                mat[x][y] = 0;
-
-                // Move right
-                if (FindPathWithRidersToAirport(mat, x - 1, y, riders))
-                    return true;
-
-                // Move down
-                if (FindPathWithRidersToAirport(mat, x, y - 1, riders))
-                    return true;
-                
-                // backtrack
-                riders -= 1;
-                mat[x][y] = 1;
-                return false;
-            }
-
-            return false;
-        }
-        
         /*
          * Find if a substring x in substring s
          * then return the index of the first occurence
          */
         public int FirstOccurrence(string s, string x)
         {
-            int N = s.Length; 
-            int M = x.Length; 
-            
+            int N = s.Length;
+            int M = x.Length;
+
             /* A loop to slide pat[] one by one */
-            for (int i = 0; i <= N - M; i++) { 
-                int j; 
-       
+            for (int i = 0; i <= N - M; i++)
+            {
+                int j;
+
                 /* For current index i, check for 
                 pattern match */
-                for (j = 0; j < M; j++) 
-                    if (s[i + j] != x[j] && s[i + j] != '*') 
-                        break; 
-       
-                if (j == M) 
-                    return i; 
-            } 
-       
-            return -1; 
+                for (j = 0; j < M; j++)
+                    if (s[i + j] != x[j] && s[i + j] != '*')
+                        break;
+
+                if (j == M)
+                    return i;
+            }
+
+            return -1;
         }
     }
 }

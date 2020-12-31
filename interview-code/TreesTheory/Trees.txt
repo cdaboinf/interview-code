@@ -1,0 +1,109 @@
+BFS => QUEUE
+DFS => STACK
+
+Tree Traversal
+    Order is based on rood order
+        (a) Inorder (Left, Root, Right)
+        (b) Preorder (Root, Left, Right)
+        (c) Postorder (Left, Right, Root)
+
+Full Binary Tree:
+    A Binary Tree is a full binary tree if every node has 0 or 2 children. 
+    The following are the examples of a full binary tree. 
+    We can also say a full binary tree is a binary tree in which all nodes 
+    except leaf nodes have two children.
+
+Complete Binary Tree: 
+    A Binary Tree is a complete Binary Tree if all the levels 
+    are completely filled except possibly the last level 
+    and the last level has all keys as left as possible
+
+Balanced Binary Tree:
+    A binary tree is balanced if the height of the tree is O(Log n) where n is the number of nodes
+
+Binary Tree - Bottom to Top:
+    In the Bottom to Top Approach, we solve the problem for the left and right subtrees. We then take the two results 
+    and solve it for the entire tree.
+    This approach is used more often than the Top to Bottom Approach.
+
+Binary Tree - Top to Bottom:
+    In the Top to Bottom Approach, we evaluate the result for the current node, 
+    and then pass it on to left and right nodes to evaluate for themselves. 
+    There is usually a variable(s) that holds the result. We pass the variable(s) 
+    down to the children nodes to update. After the entire tree is traversed, 
+    the variable will hold the result.
+
+Passing the same Variable in Recursion
+    Recursion Returns Value:
+        int max = TrackSum(root, 0);
+        public int TrackSum(TreeNode root, int maxSum)
+    Recursion Returns Void:
+        void GetMinimumValue(TreeNode root, ref int minVal, ref List<int> values)
+
+Red-Black Trees // https://www.programiz.com/dsa/red-black-tree
+    A tree with the assurance that its height remains as O(log n) after any sequence of deletions and insertions. 
+
+Uses:
+    Process scheduler or for keeping track of the virtual memory segments for a process.
+    They are also used in map, multimap, multiset from C++ STL 
+    java.util.TreeMap , java.util.TreeSet from Java. 
+    MySQL uses Red-Black Trees for indexes on tables.
+
+There are two types of rotations:
+
+    Left Rotate:
+        In left-rotation, the arrangement of the nodes on the right is transformed into the arrangements on the left node.
+
+    Right Rotate:
+        In right-rotation, the arrangement of the nodes on the left is transformed into the arrangements on the right node.
+
+Insertion(O(log(n))):
+
+    rebalanceInset(x)
+    if(isRoot(x))
+        makeBlack(x) // depth increases by 1
+    else
+        makeRed(x)
+        y = parent(x)
+        z = grandParent(x)
+        if(isRed(y))
+            s = sibling(y) // recoloring is needed
+            if(isBlack(s))
+                a,b,c = restructure(x) // case 1
+                makeBlack(b)
+                makeRed(a)
+                makeRed(c)
+            else
+                makeBlack(y) // case 2
+                makeRed(s)
+                makeRed(z)
+                rebalanceInset(z)           
+        
+B Trees // http://www.btechsmartclass.com/data_structures/b-trees.html
+    B-trees are balanced search trees designed to work well on magnetic disks or other direct-access secondary storage 
+    devices. B-trees are similar to red-black trees, but they are better at minimizing disk I/O operations.
+
+Search Operation in B-Tree:
+    The search operation in B-Tree is similar to the search operation in Binary Search Tree. In a Binary search tree, 
+    the search process starts from the root node and we make a 2-way decision every time (we go to either left subtree or right subtree). 
+    In B-Tree also search process starts from the root node but here we make an n-way decision every time. 
+    Where 'n' is the total number of children the node has. In a B-Tree, the search operation is performed with O(log n) time complexity. 
+
+    Step 1 - Read the search element from the user.
+    Step 2 - Compare the search element with first key value of root node in the tree.
+    Step 3 - If both are matched, then display "Given node is found!!!" and terminate the function
+    Step 4 - If both are not matched, then check whether search element is smaller or larger than that key value.
+    Step 5 - If search element is smaller, then continue the search process in left subtree.
+    Step 6 - If search element is larger, then compare the search element with next key value in the same node 
+    and repeate steps 3, 4, 5 and 6 until we find the exact match or until the search element is compared with last key value in the leaf node.
+    Step 7 - If the last key value in the leaf node is also not matched then display "Element is not found" and terminate the function.
+
+Insertion Operation in B-Tree:
+    In a B-Tree, a new element must be added only at the leaf node. That means, the new keyValue is always attached to the leaf node only.
+
+    Step 1 - Check whether tree is Empty.
+    Step 2 - If tree is Empty, then create a new node with new key value and insert it into the tree as a root node.
+    Step 3 - If tree is Not Empty, then find the suitable leaf node to which the new key value is added using Binary Search Tree logic.
+    Step 4 - If that leaf node has empty position, add the new key value to that leaf node in ascending order of key value within the node.
+    Step 5 - If that leaf node is already full, split that leaf node by sending middle value to its parent node. Repeat the same until the sending value is fixed into a node.
+    Step 6 - If the spilting is performed at root node then the middle value becomes new root node for the tree and the height of the tree is increased by one.

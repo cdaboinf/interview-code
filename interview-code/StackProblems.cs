@@ -60,7 +60,6 @@ namespace interview_code
             return operands.Pop();
         }
 
-
         // validate if the element is an operator
         // --- push into operators stack
         // ------ if operator >= than operator top on stack
@@ -108,6 +107,46 @@ namespace interview_code
                     break;
             }
             return result;
+        }
+
+    }
+
+    public class StackQueue
+    {
+        private Stack<int> s1;
+        private Stack<int> s2;
+
+        public StackQueue()
+        {
+            s1 = new Stack<int>();
+            s2 = new Stack<int>();
+        }
+
+        public void Enqueue(int item)
+        {
+            s1.Push(item);
+        }
+
+        public int Dequeue()
+        {
+            if (s2.Count == 0)
+            {
+                flushToS2();
+            }
+            if (s2.Count == 0)
+            {
+                throw new Exception("Empty queue");
+            }
+            return s2.Pop();
+        }
+
+        private void flushToS2()
+        {
+            while (s1.Count!=0)
+            {
+                var val = s1.Pop();
+                s2.Push(val);
+            }
         }
     }
 }

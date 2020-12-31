@@ -55,15 +55,15 @@ namespace interview_code
                 if (!visited[i])
                 {
                     var a = i;
-                    var b = arr[i] - 1;
+                    var b = arr[i] - 1; // where it wants to be, 1,4,3,2 => arr[2] => 4 - 1 = 3, then arr[3] = should be 4 
                     var length = 1;
                     visited[i] = true;
 
                     while (b != i)
                     {
                         visited[b] = true;
-                        a = b;
-                        b = arr[b] - 1;
+                        a = b; // move to index that wants to be
+                        b = arr[b] - 1; // where it wants to be
                         length++;
                     }
 
@@ -109,6 +109,40 @@ namespace interview_code
         public long ArrayManipulation(int n, int[][] queries)
         {
             return 0;
+        }
+        
+        /*
+         * O(d*n)
+         */
+        static int[] RotateLeft(int[] a, int d) {        
+            for(var j=0; j<d; j++){
+                var temp = a[0];
+                for(var i=0; i<a.Length - 1; i++){
+                    a[i] = a[i+1];
+                }
+                a[a.Length-1] = temp;
+            }
+            return a;
+        }
+        
+        /*
+         * O(n)
+         */
+        public int[] RotLeft(int[] a, int d) {        
+            d %= a.Length;
+            Reverse(a, 0, d-1);
+            Reverse(a, d, a.Length-1);
+            Reverse(a, 0, a.Length-1);
+            return a;
+        }
+        private void Reverse(int[] a, int s, int e) {                    
+            while(s<e){
+                var temp = a[s];
+                a[s] = a[e];
+                a[e] = temp;
+                s++;
+                e--;
+            }
         }
     }
 }

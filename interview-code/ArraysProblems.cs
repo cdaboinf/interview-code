@@ -289,6 +289,7 @@ namespace interview_code
             }
 
             var sum = 0;
+            
             var pair = new Tuple<int, int>(0, 0);
             var sums = new Hashtable();
             for (var i = 0; i < a.Length; i++)

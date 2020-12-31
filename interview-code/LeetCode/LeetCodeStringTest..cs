@@ -56,7 +56,7 @@ namespace interview_code
                 return 0;
             }
 
-            return (int) reverse;
+            return (int)reverse;
         }
 
         /*
@@ -98,8 +98,8 @@ namespace interview_code
 
             double integer = 0;
             if (trimmed.Length == 1
-                && ((int) char.GetNumericValue(trimmed[0]) < 0
-                    || (int) char.GetNumericValue(trimmed[0]) > 9))
+                && ((int)char.GetNumericValue(trimmed[0]) < 0
+                    || (int)char.GetNumericValue(trimmed[0]) > 9))
             {
                 return 0;
             }
@@ -110,32 +110,13 @@ namespace interview_code
                 return 0;
             }
 
-            for (var i = isNegative || isPositive ? 1 : 0;
-                i < trimmed.Length;
-                i++)
+            for (var i = isNegative || isPositive ? 1 : 0; i < trimmed.Length; i++)
             {
                 var numChar = char.GetNumericValue(trimmed[i]);
-                if (numChar > 9 || numChar < 0)
-                {
-                    return isNegative ? -1 * (int) integer : (int) integer;
-                }
-
                 integer = integer * 10 + numChar;
-
-                var testInt = isNegative ? -1 * integer : integer;
-
-                if (testInt < int.MinValue)
-                {
-                    return int.MinValue;
-                }
-
-                if (testInt > int.MaxValue)
-                {
-                    return int.MaxValue;
-                }
             }
 
-            return isNegative ? -1 * (int) integer : (int) integer;
+            return isNegative ? -1 * (int)integer : (int)integer;
         }
     }
 }

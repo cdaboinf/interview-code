@@ -1,1 +1,17 @@
-﻿
+﻿Arrays(arr):
+    * .Length : arr.Length => number of elements
+    * .Sort :  Array.Sort(arr) => sorts array, Array.Reverse(arr);, Sort and Reverse = sort descending
+    * .Copy : Array.CopyTo copies all the elements of the current array to the specified destination
+        - var source = new[] { "Ally", "Bishop", "Billy" };
+        - var target = new string[4];
+        - use => source.CopyTo(target, destination-index);
+
+    * .Clone: Array.Clone does a shallow copy of all the elements in the source array and returns an object containing those elements.
+        - var source = new[] { "Ally", "Bishop", "Billy" };
+        - use => var target = (string[])source.Clone(); => (string[] -- type!!)
+
+String(string):
+    * StringBuilder sb = new StringBuilder("")
+        - sb.Append("string")
+        - sb.ToString() => string value
+    * .Append => string.Substring(start, length)

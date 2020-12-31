@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace interview_code
@@ -13,22 +14,23 @@ namespace interview_code
          */
         public int FindTilt(TreeNode root)
         {
+            Console.WriteLine();
             if (root == null)
             {
                 return 0;
             }
             else
             {
-                T t = new T();
-                FindTiltNode(root, t);
-                return t.tilt;
+                var tilt = 0;
+                FindTiltNode(root, tilt);
+                return tilt;
             }
         }
 
         /*
          * Evaluation at node level and keep track of target at tree level
          */
-        private int FindTiltNode(TreeNode root, T t)
+        private int FindTiltNode(TreeNode root, int tilt)
         {
             var leftSum = 0;
             var rightSum = 0;
@@ -39,21 +41,15 @@ namespace interview_code
             }
             else
             {
-                leftSum = FindTiltNode(root.left, t);
-                rightSum = FindTiltNode(root.right, t);
+                leftSum = FindTiltNode(root.left, tilt);
+                rightSum = FindTiltNode(root.right, tilt);
             }
 
             // Add current tilt to overall 
-            t.tilt += Math.Abs(leftSum - rightSum);
+            tilt += Math.Abs(leftSum - rightSum);
 
             // Returns sum of nodes under current tree, level
             return leftSum + rightSum + root.val;
-        }
-
-        // helper on tilt
-        private class T
-        {
-            public int tilt = 0;
         }
 
         /*
@@ -126,21 +122,17 @@ namespace interview_code
             return Math.Max(leftHeight, rightHeight) + 1;
         }
 
-        public void HeightOfTree(TreeNode root, int pHeight, ref int maxHeight)
+        public int HeightOfTree(TreeNode root)
         {
-            if (root == null)
-            {
-                return;
-            }
+            if (root == null) 
+                return 0;
 
-            var nodeHeight = pHeight + 1;
-            if (nodeHeight > maxHeight)
-            {
-                maxHeight = nodeHeight;
-            }
+            /* compute the depth of each subtree */
+            int lDepth = HeightOfTree(root.left); 
+            int rDepth = HeightOfTree(root.right);
 
-            HeightOfTree(root.left, nodeHeight, ref maxHeight);
-            HeightOfTree(root.right, nodeHeight, ref maxHeight);
+            /* use the larger one */
+            return Math.Max(lDepth, rDepth) + 1;
         }
 
         /*
@@ -169,7 +161,7 @@ namespace interview_code
             return 1 + Math.Max(isLeftBalance, isRightBalance); // +1 root
         }
 
-        public TreeNode InvertTree(TreeNode root)
+        public TreeNode InvertTree(TreeNode root) 
         {
             if (root == null)
             {
@@ -190,29 +182,32 @@ namespace interview_code
          */
         public int MinimunmDepth(TreeNode root)
         {
-            if (root == null)
-            {
-                return 0;
-            }
+            // Null node has 0 depth.
+            if (root == null) 
+            { 
+                return 0; 
+            } 
+  
+            // Leaf node reached.
+            if (root.left == null && root.right == null) 
+            { 
+                return 1; 
+            } 
 
-            if (root.left == null && root.right == null)
-            {
-                return 1;
-            }
+            // Current node has only right subtree.
+            if (root.left == null) 
+            { 
+                return MinimunmDepth(root.right) + 1; 
+            } 
 
-            // If left subtree is NULL, recur for right subtree  
-            if (root.left == null)
-            {
-                return MinimunmDepth(root.right) + 1;
-            }
+            // Current node has only left subtree.
+            if (root.right == null) 
+            { 
+                return MinimunmDepth(root.left) + 1; 
+            } 
 
-            // If right subtree is NULL, recur for left subtree  
-            if (root.right == null)
-            {
-                return MinimunmDepth(root.left) + 1;
-            }
-
-            return Math.Min(MinimunmDepth(root.left), MinimunmDepth(root.right)) + 1;
+            // if none of the above cases, then recur on both left and right subtrees.
+            return Math.Min(MinimunmDepth(root.left), MinimunmDepth(root.right)) + 1; 
         }
 
         /*
@@ -220,27 +215,16 @@ namespace interview_code
          */
         public int MaximumDepth(TreeNode root)
         {
-            if (root == null)
-            {
+            if (root == null) 
                 return 0;
-            }
-
-            if (root.left == null && root.right == null)
-            {
-                return 1;
-            }
-
-            if (root.left == null)
-            {
-                return MaximumDepth(root.right) + 1;
-            }
-
-            if (root.right == null)
-            {
-                return MaximumDepth(root.left) + 1;
-            }
-
-            return Math.Max(MaximumDepth(root.right), MaximumDepth(root.left)) + 1;
+            /* compute the depth of each subtree */
+            int lDepth = MaximumDepth(root.left); 
+            int rDepth = MaximumDepth(root.right); 
+  
+            /* use the larger one */
+            if (lDepth > rDepth) 
+                return (lDepth + 1);
+            return (rDepth + 1);
         }
 
         /*
@@ -374,8 +358,7 @@ namespace interview_code
             foundPath = FindNodesPathPerSumFromRootToLeaf(root.left, subsum, ref nodes);
             if (!foundPath)
             {
-                nodes = new List<TreeNode>();
-                nodes.Add(root);
+                nodes = new List<TreeNode> {root};
                 foundPath = FindNodesPathPerSumFromRootToLeaf(root.right, subsum, ref nodes);
             }
 
@@ -479,12 +462,14 @@ namespace interview_code
                 }
             }
         }
+        
         /*
          * root.left = SerializeToTree(nodes, root.left, 2 * index + 1);
          * root.right = SerializeToTree(nodes, root.right, 2 * index + 2);
          */
         public TreeNode SerializeToTree(List<int> nodes, TreeNode root, int index)
         {
+
             // Base case for recursion 
             if (index < nodes.Count)
             {
@@ -501,6 +486,138 @@ namespace interview_code
 
             return root;
         }
+        
+        public void InOrderTraversalInteractive(TreeNode root)
+        {
+            /*
+             * right, root, left => stack LIFO(in-order) root is the order node
+             * right, left, root => stack LIFO(pre-order)
+             * root, right, left => stack LIFO(post-order)
+             */
+
+            var nodes = new Stack<TreeNode>();
+            nodes.Push(root);
+            var round = 0;
+
+            while (nodes.Count != 0)
+            {
+                var node = nodes.Pop();
+                Console.WriteLine($"{round} -- pop-node= {node.val}");
+                if (node.visited)
+                {
+                    Console.WriteLine("l-"+ node.val + ", ");
+                }
+                else
+                {
+                    if (node.right != null)
+                    {
+                        nodes.Push(node.right);
+                    }
+
+                    node.visited = true;
+                    Console.WriteLine($"{round} -- push/visited-node= {node.val}");
+                    nodes.Push(node);
+                    if (node.left != null)
+                    {
+                        nodes.Push(node.left);
+                    }
+                }
+
+                round++;
+            }
+        }
+        
+        /*
+         * Tree is Symmetric
+         */
+        public bool IsSymmetric(TreeNode root) {
+            if(root == null){
+                return true;
+            }
+            return IsMirror(root.left, root.right);
+        }
+
+        private bool IsMirror(TreeNode root1, TreeNode root2){
+            if(root1 == null && root2 == null){
+                return true;
+            }
+        
+            if(root1 !=null && root2 != null && root1.val == root2.val){
+                return IsMirror(root1.left, root2.right) && IsMirror(root1.right, root2.left);
+            }
+            return false;
+        }
+        
+        /*
+         * Sorted array to BST
+         */
+        public TreeNode SortedArrayToBst(int[] nums) {
+            var root = BuildTree(nums, 0, nums.Length-1);
+        
+            return root;
+        }
+    
+        private TreeNode BuildTree(int [] nums ,int start, int end){
+        
+            if (start > end) 
+            { 
+                return null; 
+            } 
+        
+            var mid = (start+end)/2;
+            var root = new TreeNode(nums[mid]);
+
+            root.left = BuildTree(nums, start, mid-1);
+            root.right = BuildTree(nums, mid+1, end);
+        
+            return root;
+        }
+        
+        public int MaxPathSum(TreeNode root) {
+            int maxSum = int.MinValue;
+            TrackSum(root, ref maxSum);
+            return maxSum;
+        }
+    
+        private int TrackSum(TreeNode root, ref int maxSum){
+            if(root == null){
+                return 0;
+            }
+
+            var lsum = 0;
+            if(root.left != null){
+                lsum = Math.Max(0,TrackSum(root.left, ref maxSum));
+            }
+            var rsum = 0;
+            if(root.right != null){
+                rsum = Math.Max(0,TrackSum(root.right, ref maxSum));
+            }
+        
+            maxSum = Math.Max(maxSum, lsum + rsum + root.val);
+            Console.WriteLine(maxSum);
+            return Math.Max(lsum , rsum) + root.val;
+        }
+        
+        public int KthSmallest(TreeNode root, int k) {
+            Stack<int> minElements = new Stack<int>();
+            TraverBst(root, ref minElements, k);
+            return minElements.Pop();
+        }
+    
+        private static int TraverBst (TreeNode root, ref Stack<int> minElements, int kth){
+            if(root == null){
+                return 0;
+            }
+        
+            if(root.left != null){
+                TraverBst(root.left, ref minElements, kth);
+            }
+            if(minElements.Count != kth){     
+                minElements.Push(root.val);
+            }
+            TraverBst(root.right, ref minElements, kth);
+            return root.val;
+        }
     }
 
     public class TreeNode
@@ -515,6 +632,7 @@ namespace interview_code
         }
 
         public int val { set; get; }
+        public bool visited { get; set; }
         public TreeNode left { set; get; }
         public TreeNode right { set; get; }
     }

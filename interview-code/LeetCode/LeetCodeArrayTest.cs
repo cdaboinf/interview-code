@@ -27,8 +27,7 @@ namespace interview_code
             {
                 if (nums[j] != nums[i])
                 {
-                    i++;
-                    nums[i] = nums[j];
+                    nums[i++] = nums[j];
                 }
             }
 
@@ -117,6 +116,7 @@ namespace interview_code
         {
             var hash_table = new Hashtable();
 
+            // add--remove
             for (int i = 0; i < nums.Length; i++)
             {
                 if (hash_table.ContainsKey(nums[i]))

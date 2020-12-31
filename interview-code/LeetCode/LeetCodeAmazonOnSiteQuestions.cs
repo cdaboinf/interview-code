@@ -1,4 +1,7 @@
-$HEADER$namespace $NAMESPACE$
+namespace interview_code.LeetCode
 {
-  public class $CLASS$ {$END$}
+    public class LeetCodeAmazonOnSiteQuestions
+    {
+        
+    }
 }

@@ -1,4 +1,4 @@
-namespace interview_code
+namespace interview_code.LeetCode
 {
     public class LeetCodeAmazonInterviewQuestions
     {
