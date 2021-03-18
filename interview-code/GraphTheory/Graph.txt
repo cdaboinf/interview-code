@@ -1,0 +1,7 @@
+DFS: 
+    Recursive algorithm
+    Stack
+    
+BFS: 
+    Queue algorithm
+    Queue

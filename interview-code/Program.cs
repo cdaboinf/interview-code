@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using interview_code.CompanyTechInterviews;
 using System;
+using System.Collections;
 using interview_code.AlgoExpert;
 using NUnit.Framework;
+using interview_code.LeetCode.Microsoft;
 
 namespace interview_code
 {
@@ -12,13 +14,19 @@ namespace interview_code
     {
         static void Main(string[] args)
         {
-            //var inp = Console.ReadLine();
-            //Console.WriteLine(inp);
-            
-            var practice = new TestPrep();
-            var input = new List<int> {1,2,3};
+            var problem = new Blackbaud();
 
-            practice.Powerset(input);
+            //var noSpaces = problem.IsPalindrome("abcdcba");
+            //var withSpaces = problem.IsPalindromeWithSpaces("ab cdcb a ");
+            //var longest = problem.LongestPalindromeSubstring("abcba");
+
+            var apps = new Dictionary<string, string[]>();
+            apps.Add("a", new string[] { });
+            apps.Add("b", new string[] {"c"});
+            apps.Add("c", new string[] {"a"});
+            apps.Add("d", new string[] {"b", "c"});
+            apps.Add("e", new string[] {"d"}); // a,c,b,d,e
+            var dependencies = problem.DependencyList(apps);
 
             Console.ReadKey();
         }

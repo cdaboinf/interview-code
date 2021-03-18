@@ -59,7 +59,7 @@ namespace interview_code
         {
             if (r >= l)
             {
-                int mid = l + (r - l) / 2;
+                int mid = l + (r - l) / 2; // handle overflow when left and right are large numbers
 
                 // If the element is present at the 
                 // middle itself 
@@ -114,7 +114,7 @@ namespace interview_code
                 {
                     var temp = arr[j];
                     arr[j] = arr[i];
-                    arr[j] = temp;
+                    arr[i] = temp;
                     i += 1;
                 }
             }

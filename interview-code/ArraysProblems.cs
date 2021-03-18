@@ -169,7 +169,7 @@ namespace interview_code
             while (count < n)
                 arr[count++] = 0;
         }
-        
+
         public int[] PartionOnPivot(int[] array, int pivot)
         {
             var lb = 0;
@@ -240,6 +240,7 @@ namespace interview_code
                     s++;
                 }
             }
+
             return null;
         }
 
@@ -266,7 +267,7 @@ namespace interview_code
                 }
 
                 uniques.Add(val[e], e);
-                
+
                 // keep updating sum, to the max of sums
                 if (e - s + 1 > sum)
                 {
@@ -277,7 +278,7 @@ namespace interview_code
 
             return result;
         }
-        
+
         /*
             sub-array: prefix-sum
         */
@@ -289,7 +290,7 @@ namespace interview_code
             }
 
             var sum = 0;
-            
+
             var pair = new Tuple<int, int>(0, 0);
             var sums = new Hashtable();
             for (var i = 0; i < a.Length; i++)
@@ -370,19 +371,21 @@ namespace interview_code
         {
             public void Rotate(int[] nums, int k)
             {
-                for (var i = 0; i < k; i++)
-                {
-                    RotateRight(nums, 0, nums.Length);
-                }
+                k = nums.Length % k;
+                Reverse(nums, 0, nums.Length - 1);
+                Reverse(nums, 0, k - 1);
+                Reverse(nums, k, nums.Length - 1);
             }
 
-            private void RotateRight(int[] nums, int start, int end)
+            private void Reverse(int[] nums, int start, int end)
             {
-                for (var i = 0; i < nums.Length; i++)
+                while (start < end)
                 {
                     var temp = nums[end];
                     nums[end] = nums[start];
                     nums[start] = temp;
+                    start++;
+                    end--;
                 }
             }
         }

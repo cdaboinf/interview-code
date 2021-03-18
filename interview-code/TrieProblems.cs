@@ -62,6 +62,24 @@ namespace interview_code
 
             return true;
         }
+        
+        // Returns if there is any word in the trie
+        // that starts with the given prefix.
+        public int StartsWithCountMatches(string word)
+        {
+            Node start = root;
+            foreach (var ch in word)
+            {
+                if (!start.Neighbors.ContainsKey((ch)))
+                {
+                    return 0;
+                }
+
+                start = (Node) start.Neighbors[ch];
+            }
+            
+            return start.Neighbors.Count;
+        }
     }
 
     public class Node
