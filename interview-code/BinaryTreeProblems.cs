@@ -187,25 +187,21 @@ namespace interview_code
             {
                 return 0;
             }
-
             // Leaf node reached.
             if (root.left == null && root.right == null)
             {
                 return 1;
             }
-
             // Current node has only right subtree.
             if (root.left == null)
             {
                 return MinimunmDepth(root.right) + 1;
             }
-
             // Current node has only left subtree.
             if (root.right == null)
             {
                 return MinimunmDepth(root.left) + 1;
             }
-
             // if none of the above cases, then recur on both left and right subtrees.
             return Math.Min(MinimunmDepth(root.left), MinimunmDepth(root.right)) + 1;
         }
@@ -437,7 +433,6 @@ namespace interview_code
             {
                 return;
             }
-
             var nodes = new Queue<TreeNode>();
             nodes.Enqueue(root);
             while (nodes.Count != 0)
@@ -498,28 +493,28 @@ namespace interview_code
             while (nodes.Count != 0)
             {
                 var node = nodes.Pop();
-                Console.WriteLine($"{round} -- pop-node= {node.val}");
-                if (node.visited)
-                {
-                    Console.WriteLine("l-" + node.val + ", ");
-                }
-                else
-                {
+                //Console.WriteLine($"{round} -- pop-node= {node.val}");
+                //if (node.visited)
+                //{
+                    //Console.WriteLine("l-" + node.val + ", ");
+                //}
+                //else
+                //{
                     if (node.right != null)
                     {
                         nodes.Push(node.right);
                     }
 
-                    node.visited = true;
-                    Console.WriteLine($"{round} -- push/visited-node= {node.val}");
+                    //node.visited = true;
+                    //Console.WriteLine($"{round} -- push/visited-node= {node.val}");
                     nodes.Push(node);
                     if (node.left != null)
                     {
                         nodes.Push(node.left);
                     }
-                }
+                //}
 
-                round++;
+                //round++;
             }
         }
 

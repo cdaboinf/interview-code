@@ -21,10 +21,8 @@ namespace interview_code
                     var newNode = new Node(ch);
                     start.Neighbors.Add(ch, newNode);
                 }
-
                 start = (Node) start.Neighbors[ch];
             }
-
             start.IsWord = true;
         }
 

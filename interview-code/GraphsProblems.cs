@@ -51,7 +51,6 @@ namespace interview_code
                 {
                     return true;
                 }
-
                 foreach (var neighbor in current.Neightbors)
                 {
                     if (neighbor.State == State.Unvisited)
@@ -62,7 +61,6 @@ namespace interview_code
                 }
                 current.State = State.Visited;
             }
-
             return false;
         }
 

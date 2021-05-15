@@ -6,7 +6,7 @@ namespace interview_code
 {
     public class BinarySearchTree
     {
-        public static TreeNode MinBst(List<int> array, TreeNode node, int start, int end) {
+        public TreeNode MinBst(List<int> array, TreeNode node, int start, int end) {
             if(end < start){
                 return node;
             }
@@ -63,7 +63,6 @@ namespace interview_code
                 // on the left side. You can discuss with the interviewer.
                 current = current.val < value ? current.right : current.left;
             }
-
             if (parent == null)
             {
                 root = new TreeNode(value);
@@ -96,7 +95,6 @@ namespace interview_code
                     return current;
                 }
             }
-
             return null;
         }
 
